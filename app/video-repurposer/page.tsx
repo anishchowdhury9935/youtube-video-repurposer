@@ -49,13 +49,13 @@ const cutVideoClips = async (
 	videoId: string,
 	clips: { start: number; end: number }[],
 ): Promise<{ clipIds: string[] }> => {
-	//  Replace this with your actual video cutting implementation using a library
-	//  like ffmpeg or a cloud-based video editing service.
-	//  Example (Conceptual using a hypothetical library):
-	//  const clipFiles = await cutVideo(videoId, clips);
-	//  return { clipIds: clipFiles.map(file => file.path) };
+	// Replace this with your actual video cutting implementation using a library
+	// like ffmpeg or a cloud-based video editing service.
+	// Example (Conceptual using a hypothetical library):
+	// const clipFiles = await cutVideo(videoId, clips);
+	// return { clipIds: clipFiles.map(file => file.path) };
 
-	//  Simulate server-side cutting (replace with actual server call)
+	// Simulate server-side cutting (replace with actual server call)
 	// await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate processing delay
 
 	if (!videoId || clips.length === 0) {
@@ -66,11 +66,11 @@ const cutVideoClips = async (
 		const response = await fetch(
 			`${config.api.baseURL}/video/edit/trim-video`,
 			{
-				//  Corrected URL
+				// Corrected URL
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-					"authorization": `${localStorage.getItem("token")}`
+					authorization: `${localStorage.getItem("token")}`,
 				},
 				body: JSON.stringify({
 					// Changed the request body to match your expected format
@@ -103,11 +103,12 @@ const cutVideoClips = async (
 			return { clipIds: [videoUrl] }; // Return the URL in the expected format
 		} else {
 			// Handle other content types or errors
-			// throw new Error(`Unexpected content type: ${contentType}`);
 			console.error("Unexpected content type:", contentType);
+			return { clipIds: [] };
 		}
 	} catch (error: any) {
 		console.error("Error during server-side video trimming:", error);
+		return { clipIds: [] };
 	}
 };
 
@@ -183,7 +184,7 @@ const VideoRepurposerApp = () => {
 	const [selectedClipIndex, setSelectedClipIndex] = useState<number | null>(
 		null,
 	); // To store the selected clip index
-	const {isAuth} = useAuth()
+	const { isAuth } = useAuth();
 
 	const playerRef = useRef<HTMLVideoElement>(null);
 
@@ -268,7 +269,6 @@ const VideoRepurposerApp = () => {
 				handleDuration(playerRef.current!.duration);
 			};
 		}
-		
 	}, [videoUrl]);
 
 	// Animation variants for status messages
@@ -595,7 +595,6 @@ const VideoRepurposerApp = () => {
 					</CardContent>
 				</Card>
 			</div>
-			
 		</div>
 	);
 };
