@@ -31,7 +31,7 @@ const useAuth = () => {
 				if (response.ok) {
 					setIsAuth(true);
 					setLoading(false);
-					toast.success("Authenticated");
+					// toast.success("Authenticated");
 				} else {
 					setIsAuth(false);
 					setLoading(false);
